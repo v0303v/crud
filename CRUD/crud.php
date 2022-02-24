@@ -1,7 +1,40 @@
-<?php // Добавлять сообщения обо всех ошибках, кроме E_NOTICE
-error_reporting(E_ALL & ~E_NOTICE); ?>
+<?php 
+// Добавлять сообщения обо всех ошибках, кроме E_NOTICE
+    error_reporting(E_ALL & ~E_NOTICE); ?>
 <?php
-session_start(); ?>
+session_start(); 
+require_once './config.php';
+
+$firstname = $_POST['firstname'];
+$lastname = $_POST['lastname']; 
+// $timestamp = $_POST[date('Y-m-d H:i:s')];
+$filename = $_POST['filename']; 
+
+// var_dump($_POST); die;
+$insertData = new createUser($firstname, $lastname, $filename, $extensions);
+// $insertData->fileCheck($_FILES['filename']['name']);
+$insertData->insertData();
+
+// var_dump($insertData); die;
+
+$display = new displayUser($firstname, $lastname, $filename);
+$display->displayAll();
+
+
+// $deletion = new userDeleted();
+
+// if($insertData)
+//     {
+//         $_SESSION['message'] = "Record has been saved!";
+//         header('location: crud.php');
+//     }
+//     else
+//     {
+//         $_SESSION['message'] = "Error happened!";
+//         header('location: crud.php');
+//     }
+
+?>
 
 <!doctype html>
 <html lang="en">
@@ -9,67 +42,50 @@ session_start(); ?>
 <head>
     <title>CRUD</title>
     <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" idegrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" idegrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#">test</a>
+        <a class="navbar-brand" href="<?php echo 'index.php';?>">HOME</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" href="<?php echo 'index.php'; ?>">Home <span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="<?php echo '../Authentication/login.php';?>">CRUD</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="<?php echo 'index.php'; ?>">Logout</a>
+                    <a class="nav-link" href="<?php echo '../Authentication/logout.php';?>">Logout</a>
                 </li>
         </div>
     </nav>
 
-    <?php
-    require_once 'config.php';
-    ?>
-
-    <?php
-    if (isset($_SESSION['message'])) :
-    ?>
-        <div class="alert alert-<?= $_SESSION['msg_type'] ?>">
+        <div class="alert alert-<?php $_SESSION['msg_type'];?>">
             <?php
             echo $_SESSION['message'];
             unset($_SESSION['message']);
             ?>
         </div>
-
-    <?php endif ?>
-
+    
     <div class="container">
-        <?php
-        // show table 
-        $mysqli = new mysqli('localhost', 'root', '', 'dbcrud') or die(mysqli_error($mysqli));
-        $result = $mysqli->query("SELECT * FROM data") or die($mysqli->error);      // error with the database 
-        // check the db
-        ?>
         <div class="row justify-content-center">
             <table class="table">
                 <thead>
                     <tr>
                         <th>First Name</th>
                         <th>Last name</th>
-                        <th>Image</th>
+                        <th>File Name</th>
                         <th>Created at</th>
                         <th colspan="2">Action</th>
                     </tr>
                 </thead>
-                <?php
-                while ($row = $result->fetch_assoc()) :
-                ?>
+                
                     <tr>
                         <td><?php echo $row['fname']; ?></td>
                         <td><?php echo $row['lname']; ?></td>
@@ -80,28 +96,26 @@ session_start(); ?>
                             <a href="crud.php?delete=<?php echo $row['id']; ?>" class="btn btn-danger">Delete</a>
                         </td>
                     </tr>
-                <?php endwhile; ?>
             </table>
         </div>
 
         <div class="row justify-content-center">
-            <form action="config.php" method="POST" enctype="multipart/form-data">
+            <form action="" method="POST" enctype="multipart/form-data">
                 <div class="form-group">
                     <?php if ($id) : ?>
-                        <input type="text" name="name" value="<?php echo $id; ?>">
+                        <input type="text" name="id" value="<?php echo $id; ?>">
                     <?php endif; ?>
                     <div class="form-group">
-                        <label for="">First Name: </label>
-                        <input type="text" name="fname" class="from-control" value="<?php echo $fname;  ?>" placeholder="Enter your first name">
+                        <label for="">First Name:</label>
+                        <input type="text" name="firstname" class="from-control" value="<?php echo $firstname;?>" placeholder="Enter your first name">
                     </div>
                     <div class="form-group">
-                        <label for="">Last Name: </label>
-                        <input type="text" name="lname" class="from-control" value="<?php echo $lname; ?>" placeholder="Enter your last name">
+                        <label for="">Last Name:</label>
+                        <input type="text" name="lastname" class="from-control" value="<?php echo $lastname;?>" placeholder="Enter your last name">
                     </div>
                     <div class="form-group">
-                        <label for="">Image: </label>
-                        <input type="file" name="imge" class="from-control" value="">
-                        <span class="error"><?php echo $errmsg ?></span>
+                        <label for="">Image:</label>
+                        <input type="file" name="filename" class="from-control" value="" >
                     </div>
                     <div class="form-group">
                         <?php

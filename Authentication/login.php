@@ -1,12 +1,26 @@
 <?php
-
 session_start(); 
+require './process.php';
+
+$login = $_POST['login'];
+$password = $_POST['password']; 
+
+$logIn = new checkUser($login, $password,$message);
+$logIn-> userCheck();
+// var_dump($logIn); die;
+
+if (isset($_SESSION['login'])){
+    header('location:../CRUD/crud.php');
+}
+// var_dump($_SESSION); die;
+
 ?>
+
 <!doctype html>
 <html lang="en">
 
 <head>
-    <title>Test</title>
+    <title>Login</title>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -24,36 +38,35 @@ session_start();
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" href="<?php echo 'Authentication/login.php'; ?>">CRUD</a>
+                    <a class="nav-link" href="<?php echo './login.php'; ?>">CRUD</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="<?php echo 'index.php'; ?>">Logout</a>
+                    <a class="nav-link" href="<?php echo './logout.php'; ?>">Logout</a>
                 </li>
         </div>
     </nav>
 
-    <?php
-    require 'Authentication/process.php';
-    ?>
-    <?php
-    if (isset($_SESSION['message'])) :
-    ?>
-        <div class="alert alert-<?= $_SESSION['msg_type'] ?>">
-            <?php
-            echo $_SESSION['message'];
-            unset($_SESSION['message']);
-            ?>
-        </div>
-
-    <?php endif ?>
     <div class="container">
-        <div class="col text-center">
-            <div class="justify-content-center">
-                <button class="btn btn-default" type="button"><a href="<?php echo 'Authentication/login.php';?>">Login in</a></button>
-                <button class="btn btn-default" type="button"><a href="<?php echo 'Authentication/register.php';?>">Sign up</a></button>
+
+        <div class="justify_content_center">
+            <div>
+                <form action="" method="POST">
+                    <?php  
+                    if(isset($message)){  
+                        echo '<label class="text-danger">'.$message.'</label>';  
+                    }?>  
+                    <label for="">Login: </label>
+                    <input type="text" name="login" value="<?php echo $login;?>">
+                    <br>
+                    <label for="">Password: </label>
+                    <input type="password" name="password" value="<?php echo $password;?>">
+                    <br>
+                    <button class="btn btn-primary" name="enter" type="submit">Enter</button>
+                </form>
             </div>
         </div>
     </div>
+
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
