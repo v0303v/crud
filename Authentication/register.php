@@ -4,10 +4,15 @@ require_once './process.php';
 
 $login = $_POST['login'];
 $password = $_POST['password']; 
+//TODO password incryption
+// AND confirmation password!
 
-$register = new insertUser($login, $password);
-$register->inseption();
+if($_SERVER['REQUEST_METHOD']=='POST'){
+    $register = new insertUser($login, $password);
+    $register->inseption();
 
+    echo header('register.php');
+}
 ?>
 
 
@@ -24,7 +29,7 @@ $register->inseption();
   </head>
   <body>
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="<?php echo 'index.php'; ?>">HOME</a>
+        <a class="navbar-brand" href="<?php echo '/index.php'; ?>">HOME</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -48,11 +53,11 @@ $register->inseption();
                 <div class="form-group">
                     <form action="" method="POST">
                             <label for="">Login:</label>
-                                <input type="text"  class="from-control" name="login" value="<?php echo $login;?>" >
+                                <input type="text"  class="from-control" name="login" required="required" >
                                 <br>
 
                             <label for="">Password:</label>
-                                <input type="password" class="from-control" name="password" value="<?php echo $password;?>">
+                                <input type="password" class="from-control" name="password" required="required">
                                 <br>
                             <button class="btn btn-primary" name="submit" type="submit">Submit</button>
                     </form>

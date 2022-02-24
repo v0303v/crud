@@ -1,16 +1,6 @@
 <?php
-function dd($var)
-{
-    echo "<pre>";
-    var_dump($var);
-    echo "</pre>";
-    die;
-}
-?>
-
-<?php
-//connection to local database 
-class connection {
+// include './DbConnection.php';
+class DbConnection {
     public $host = 'localhost';
     public $root = 'root';
     public $rootpass = '';
@@ -20,16 +10,15 @@ class connection {
     public function __construct()
     {
         try{
-            $this->connection = new PDO("mysql:host=$this->host; dbname=$this->dbName", $this->root, $this->rootpass);
-            $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $this->DbConnection = new PDO("mysql:host=$this->host; dbname=$this->dbName", $this->root, $this->rootpass);
+            $this->DbConnection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         }
         catch (PDOException $exp){
             echo $exp->getMessage();
         }
     }
 }
-
-class insertUser extends connection {
+class insertUser extends DbConnection {
     public $login;
     public $password;
     
@@ -44,7 +33,7 @@ class insertUser extends connection {
         try{
             $insert = "INSERT INTO `users` (login, password) VALUE (:login, :password)";
 
-            $sql = $this->connection->prepare($insert);
+            $sql = $this->DbConnection->prepare($insert);
             $sql->bindParam(':login', $_POST['login'], PDO::PARAM_STR);
             $sql->bindParam(':password', $_POST['password'], PDO::PARAM_STR);
 
@@ -56,7 +45,7 @@ class insertUser extends connection {
     }
 }
 
-class checkUser extends connection {
+class checkUser extends DbConnection {
     public $login;
     public $password;
     public $message;
@@ -79,7 +68,7 @@ class checkUser extends connection {
             } else{  
                 $checker = "SELECT * FROM `users` WHERE login=:login AND password=:password";
             
-                $sql = $this->connection->prepare($checker); 
+                $sql = $this->DbConnection->prepare($checker); 
                 $sql->bindParam(':login', $this->login, PDO::PARAM_STR);
                 $sql->bindParam(':password', $this->password, PDO::PARAM_STR);
 

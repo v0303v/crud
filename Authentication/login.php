@@ -5,7 +5,7 @@ require './process.php';
 $login = $_POST['login'];
 $password = $_POST['password']; 
 
-$logIn = new checkUser($login, $password,$message);
+$logIn = new checkUser($login, $password, $message);
 $logIn-> userCheck();
 // var_dump($logIn); die;
 
@@ -31,7 +31,7 @@ if (isset($_SESSION['login'])){
 
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="<?php echo 'index.php'; ?>">HOME</a>
+        <a class="navbar-brand" href="<?php echo '/index.php'; ?>">HOME</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>

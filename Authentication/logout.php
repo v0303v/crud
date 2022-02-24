@@ -2,5 +2,5 @@
 session_start();
 
 if (session_destroy()) {
-    echo $_SERVER['../../index.php'];
+    header('location:/index.php');
 } 

@@ -1,6 +1,3 @@
-<?php 
-// Добавлять сообщения обо всех ошибках, кроме E_NOTICE
-    error_reporting(E_ALL & ~E_NOTICE); ?>
 <?php
 session_start(); 
 require_once './config.php';
@@ -10,16 +7,13 @@ $lastname = $_POST['lastname'];
 // $timestamp = $_POST[date('Y-m-d H:i:s')];
 $filename = $_POST['filename']; 
 
-// var_dump($_POST); die;
-$insertData = new createUser($firstname, $lastname, $filename, $extensions);
-// $insertData->fileCheck($_FILES['filename']['name']);
-$insertData->insertData();
-
-// var_dump($insertData); die;
-
+if($_SERVER['REQUEST_METHOD']=='POST'){
+    $insertData = new createUser($firstname, $lastname, $filename, $extensions);
+    // $insertData->fileCheck($_FILES['filename']['name']);
+    $insertData->insertData();
+}
 $display = new displayUser($firstname, $lastname, $filename);
 $display->displayAll();
-
 
 // $deletion = new userDeleted();
 
@@ -51,7 +45,7 @@ $display->displayAll();
 
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="<?php echo 'index.php';?>">HOME</a>
+        <a class="navbar-brand" href="<?php echo '/index.php';?>">HOME</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -107,11 +101,11 @@ $display->displayAll();
                     <?php endif; ?>
                     <div class="form-group">
                         <label for="">First Name:</label>
-                        <input type="text" name="firstname" class="from-control" value="<?php echo $firstname;?>" placeholder="Enter your first name">
+                        <input type="text" name="firstname" class="from-control" value="" placeholder="Enter your first name" required="required">
                     </div>
                     <div class="form-group">
                         <label for="">Last Name:</label>
-                        <input type="text" name="lastname" class="from-control" value="<?php echo $lastname;?>" placeholder="Enter your last name">
+                        <input type="text" name="lastname" class="from-control" value="" placeholder="Enter your last name" required="required">
                     </div>
                     <div class="form-group">
                         <label for="">Image:</label>
