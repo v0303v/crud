@@ -1,5 +1,6 @@
 <?php
 include './createUser.php';
+include './readUser.php';
 // //check if the file is already created 
     // public function fileCheck($filename){
 
@@ -25,32 +26,6 @@ include './createUser.php';
     //         // echo error msg;
     //     }
     // }
-
-class displayUser extends dbConnection {
-    // display data from table 
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
-    public function displayAll(){
-        try {
-            $sql = "SELECT * FROM `data`";
-            $result = $this->connection->prepare($sql);      // error with the database 
-
-            // var_dump($result); die;
-
-            $result->execute();
-
-            $row= $result->fetch(PDO::FETCH_ASSOC);
-            return $row;
-        }
-        catch (PDOException $exp){
-            echo $exp->getMessage();
-        } 
-    }
-}
-
 class userId extends createUser{
 
     public function getId(){
@@ -59,8 +34,8 @@ class userId extends createUser{
             $sql = $this->connection->prepare($getid);
 
             $sql->execute(); 
-            $fetch=$sql->fetch(PDO::FETCH_ASSOC);
-            return $fetch;
+            // $fetch=$sql->fetch(PDO::FETCH_ASSOC);
+            // return $fetch;
         } 
         catch (PDOException $exp){
             echo $exp->getMessage() . ":<p style='color:red'>get id Error!</p>";

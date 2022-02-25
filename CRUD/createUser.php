@@ -1,5 +1,5 @@
 <?php
-require './dbConnection.php';
+require_once './dbConnection.php';
 // save user into database
 class createUser extends dbConnection { 
     public $firstname;

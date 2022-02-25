@@ -12,7 +12,9 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
     // $insertData->fileCheck($_FILES['filename']['name']);
     $insertData->insertData();
 }
-$display = new displayUser($firstname, $lastname, $filename);
+
+
+$display = new readUser();
 $display->displayAll();
 
 // $deletion = new userDeleted();
@@ -79,26 +81,27 @@ $display->displayAll();
                         <th colspan="2">Action</th>
                     </tr>
                 </thead>
-                
+                        <?php foreach($result as $row):
+	                        ?>
                     <tr>
                         <td><?php echo $row['fname']; ?></td>
                         <td><?php echo $row['lname']; ?></td>
                         <td><?php echo $row['file_name']; ?></td>
                         <td><?php echo $row['created_at']; ?></td>
                         <td>
-                            <a href="crud.php?edit=<?php echo $row['id']; ?>" class="btn btn-info">Edit</a>
-                            <a href="crud.php?delete=<?php echo $row['id']; ?>" class="btn btn-danger">Delete</a>
+                            <a href="crud.php?edit=<?php echo $row['id'];?>" class="btn btn-info">Edit</a>
+                            <a href="crud.php?delete=<?php echo $row['id'];?>" class="btn btn-danger">Delete</a>
                         </td>
                     </tr>
+                        <?php
+                            endforeach;?>
             </table>
         </div>
 
         <div class="row justify-content-center">
             <form action="" method="POST" enctype="multipart/form-data">
                 <div class="form-group">
-                    <?php if ($id) : ?>
-                        <input type="text" name="id" value="<?php echo $id; ?>">
-                    <?php endif; ?>
+ 
                     <div class="form-group">
                         <label for="">First Name:</label>
                         <input type="text" name="firstname" class="from-control" value="" placeholder="Enter your first name" required="required">

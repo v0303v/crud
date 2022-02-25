@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Фев 25 2022 г., 09:27
+-- Время создания: Фев 25 2022 г., 10:00
 -- Версия сервера: 10.3.29-MariaDB-log
 -- Версия PHP: 7.2.34
 
@@ -49,7 +49,8 @@ INSERT INTO `data` (`id`, `fname`, `lname`, `extensions`, `file_name`, `created_
 (42, '234234', '234234', NULL, NULL, '2022-02-24 09:35:36'),
 (54, 'ptptpret', 'DFHLSfrh', NULL, NULL, '2022-02-24 11:10:03'),
 (59, 'nweknv', 'klsdfgklwsejhg', NULL, NULL, '2022-02-24 12:02:37'),
-(60, 'nweknv', 'klsdfgklwsejhg', NULL, NULL, '2022-02-24 12:04:13');
+(68, '879786', '313sdg sdg', NULL, NULL, '2022-02-25 06:52:36'),
+(69, '879786', '313sdg sdg', NULL, NULL, '2022-02-25 06:57:35');
 
 --
 -- Индексы сохранённых таблиц
@@ -69,7 +70,7 @@ ALTER TABLE `data`
 -- AUTO_INCREMENT для таблицы `data`
 --
 ALTER TABLE `data`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=70;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
