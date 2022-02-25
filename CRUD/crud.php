@@ -2,34 +2,6 @@
 session_start(); 
 require_once './config.php';
 
-//variables for the form
-$firstname = $_POST['firstname'];
-$lastname = $_POST['lastname']; 
-// $timestamp = $_POST[date('Y-m-d H:i:s')];
-$filename = $_POST['filename']; 
-
-//Create
-if($_SERVER['REQUEST_METHOD']=='POST'){
-    $insertData = new createUser($firstname, $lastname, $filename, $extensions);
-    // $insertData->fileCheck($_FILES['filename']['name']);
-    $insertData->insertData();
-    header('location:./crud.php');
-    exit;
-}
-
-//Read 
-$display = new readUser();
-$sql = $display->displayAll();
-
-//Update
-$update = new updateUser($firstname, $lastname);
-$update->editRecord();
-
-//Delete
-$deletion = new deleteUser();
-$deletion->deleteRecord();
-
-
 // if($insertData)
 //     {
 //         $_SESSION['message'] = "Record has been saved!";
@@ -85,20 +57,24 @@ $deletion->deleteRecord();
             <table class="table">
                 <thead>
                     <tr>
+                        <th>Id</th>
                         <th>First Name</th>
                         <th>Last name</th>
                         <th>File Name</th>
+                        <th>Image</th>
                         <th>Created at</th>
                         <th colspan="2">Action</th>
                     </tr>
-                </thead>
+                </thead> 
                         <?php 
                         if(isset($sql) && is_array($sql)){
                             foreach($sql as $row){?>
                     <tr>
+                        <td><?php echo $row['id']; ?></td>
                         <td><?php echo $row['fname']; ?></td>
                         <td><?php echo $row['lname']; ?></td>
                         <td><?php echo $row['file_name']; ?></td>
+                        <td><img src="../uploads/<?php echo $row['file_path']; ?>" height="20px" width="20px"/></td>
                         <td><?php echo $row['created_at']; ?></td>
                         <td>
                             <a href="./crud.php?id=<?php echo $row['id'];?>" class="btn btn-info">Edit</a>
@@ -125,7 +101,7 @@ $deletion->deleteRecord();
                         <input type="text" name="lastname" class="from-control" value="" placeholder="Enter your last name" required="required">
                     </div>
                     <div class="form-group">
-                        <label for="">Image:</label>
+                        <label for="">File:</label>
                         <input type="file" name="filename" class="from-control" value="" >
                     </div>
                     <div class="form-group">

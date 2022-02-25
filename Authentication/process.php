@@ -48,9 +48,8 @@ class insertUser extends DbConnection {
 class checkUser extends DbConnection {
     public $login;
     public $password;
-    public $message;
-
-    public function __construct($login, $password, $message)
+    
+    public function __construct($login, $password)
     {
         $this->login = $login;
         $this->password = $password;
