@@ -2,22 +2,33 @@
 session_start(); 
 require_once './config.php';
 
+//variables for the form
 $firstname = $_POST['firstname'];
 $lastname = $_POST['lastname']; 
 // $timestamp = $_POST[date('Y-m-d H:i:s')];
 $filename = $_POST['filename']; 
 
+//Create
 if($_SERVER['REQUEST_METHOD']=='POST'){
     $insertData = new createUser($firstname, $lastname, $filename, $extensions);
     // $insertData->fileCheck($_FILES['filename']['name']);
     $insertData->insertData();
+    header('location:./crud.php');
+    exit;
 }
 
-
+//Read 
 $display = new readUser();
-$display->displayAll();
+$sql = $display->displayAll();
 
-// $deletion = new userDeleted();
+//Update
+$update = new updateUser($firstname, $lastname);
+$update->editRecord();
+
+//Delete
+$deletion = new deleteUser();
+$deletion->deleteRecord();
+
 
 // if($insertData)
 //     {
@@ -81,27 +92,30 @@ $display->displayAll();
                         <th colspan="2">Action</th>
                     </tr>
                 </thead>
-                        <?php foreach($result as $row):
-	                        ?>
+                        <?php 
+                        if(isset($sql) && is_array($sql)){
+                            foreach($sql as $row){?>
                     <tr>
                         <td><?php echo $row['fname']; ?></td>
                         <td><?php echo $row['lname']; ?></td>
                         <td><?php echo $row['file_name']; ?></td>
                         <td><?php echo $row['created_at']; ?></td>
                         <td>
-                            <a href="crud.php?edit=<?php echo $row['id'];?>" class="btn btn-info">Edit</a>
-                            <a href="crud.php?delete=<?php echo $row['id'];?>" class="btn btn-danger">Delete</a>
+                            <a href="./crud.php?id=<?php echo $row['id'];?>" class="btn btn-info">Edit</a>
+                            <a href="./crud.php?id=<?php echo $row['id'];?>" class="btn btn-danger">Delete</a>
                         </td>
-                    </tr>
-                        <?php
-                            endforeach;?>
+                    </tr>    
+                    <?php
+                            }
+                        }
+                        ?>
             </table>
         </div>
 
         <div class="row justify-content-center">
             <form action="" method="POST" enctype="multipart/form-data">
                 <div class="form-group">
- 
+                        <input type="hidden" name="id" value="">
                     <div class="form-group">
                         <label for="">First Name:</label>
                         <input type="text" name="firstname" class="from-control" value="" placeholder="Enter your first name" required="required">
@@ -116,15 +130,15 @@ $display->displayAll();
                     </div>
                     <div class="form-group">
                         <?php
-                        if ($update == true) :
+                        if ($update == true) {
                         ?>
                             <button type="submit" class="btn btn-info" name="update">Update</button>
                         <?php
-                        else :
+                        }else{
                         ?>
                             <button type="submit" class="btn btn-primary" name="save">SAVE</button>
                         <?php
-                        endif;
+                        }
                         ?>
                     </div>
                 </div>

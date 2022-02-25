@@ -11,17 +11,23 @@ class readUser extends dbConnection {
     public function displayAll(){
         try {
             $sql = "SELECT * FROM `data` ORDER BY id DESC";
-            $result = $this->connection->prepare($sql);    
+            $sql = $this->connection->prepare($sql);    
 
-            // var_dump($result); die;
+            // var_dump($sql); die;
 
-            $result->execute();
+            $sql->execute();
 
-            $result->fetchAll(PDO::FETCH_ASSOC);
-            return $result;
+            return $sql->fetchAll(PDO::FETCH_ASSOC);
+            
         }
         catch (PDOException $exp){
             echo $exp->getMessage();
         } 
+
+
     }
 }
+
+
+
+

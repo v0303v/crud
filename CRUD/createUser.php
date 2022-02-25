@@ -34,10 +34,7 @@ class createUser extends dbConnection {
             $sql->bindParam(':extensions', $this->extensions, PDO::PARAM_STR);
             $sql->bindParam(':filename', $_POST['filename'], PDO::PARAM_STR);
 
-            // var_dump($sql); die;
-                $sql->execute(); // <-error
-            // var_dump($sql); die;
-            
+            $sql->execute(); 
         }   
         catch (Exception $exp){
             echo $exp->getMessage() . ":<p style='color:red'>inserting Error!</p>";

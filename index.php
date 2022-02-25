@@ -26,9 +26,9 @@ session_start();
                 <li class="nav-item active">
                     <a class="nav-link" href="<?php echo 'Authentication/login.php'; ?>">CRUD</a>
                 </li>
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                     <a class="nav-link" href="<?php echo 'index.php'; ?>">Logout</a>
-                </li>
+                </li> -->
         </div>
     </nav>
 
@@ -48,9 +48,9 @@ session_start();
     <?php endif ?>
     <div class="container">
         <div class="col text-center">
-            <div class="justify-content-center">
-                <button class="btn btn-default" type="button"><a href="<?php echo 'Authentication/login.php';?>">Login in</a></button>
-                <button class="btn btn-default" type="button"><a href="<?php echo 'Authentication/register.php';?>">Sign up</a></button>
+            <div class="d-grid gap-2 d-md-block">
+                <a class="btn btn-primary btn-lg " tabindex="-1" role="button" href="<?php echo 'Authentication/login.php';?> "aria-disabled="true">Login in</a>
+                <a class="btn btn-primary btn-lg " tabindex="-1" role="button" href="<?php echo 'Authentication/register.php';?> "aria-disabled="true">Sign up</a>
             </div>
         </div>
     </div>

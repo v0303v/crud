@@ -46,24 +46,22 @@ if (isset($_SESSION['login'])){
         </div>
     </nav>
 
-    <div class="container">
-
-        <div class="justify_content_center">
-            <div>
-                <form action="" method="POST">
-                    <?php  
-                    if(isset($message)){  
-                        echo '<label class="text-danger">'.$message.'</label>';  
+    <div class="row h-100 justify-content-center align-items-center">
+        <div class="col-10 col-md-8 col-lg-6">
+            <form action="" method="POST">
+                <?php if(isset($message)){  
+                    echo '<label class="text-danger">'.$message.'</label>';  
                     }?>  
-                    <label for="">Login: </label>
-                    <input type="text" name="login" value="<?php echo $login;?>">
-                    <br>
-                    <label for="">Password: </label>
-                    <input type="password" name="password" value="<?php echo $password;?>">
-                    <br>
-                    <button class="btn btn-primary" name="enter" type="submit">Enter</button>
-                </form>
-            </div>
+                <div class="form-group">
+                    <label for="username">Login:</label>
+                    <input type="text"  class="form-control username" name="login" value="<?php echo $login;?>" >
+                </div>
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" class="form-control password" name="password" value="<?php echo $password;?>">
+                </div>
+                <button class="btn btn-primary" name="enter" type="submit">Enter</button>
+            </form>
         </div>
     </div>
 

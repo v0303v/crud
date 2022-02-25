@@ -4,15 +4,23 @@ require_once './process.php';
 
 $login = $_POST['login'];
 $password = $_POST['password']; 
+$passwordconfirm = $_POST['passwordconfirm'];
 //TODO password incryption
 // AND confirmation password!
 
-if($_SERVER['REQUEST_METHOD']=='POST'){
-    $register = new insertUser($login, $password);
-    $register->inseption();
+if ($_POST['password']!== $_POST['passwordconfirm']){
+    echo "Your passwords did not match";
+} else {
+    if($_SERVER['REQUEST_METHOD']=='POST'){
+        $register = new insertUser($login, $password);
+        $register->inseption();
 
-    echo header('register.php');
+        echo header('register.php');
+    }
 }
+
+
+
 ?>
 
 
@@ -45,20 +53,25 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
     </nav>
 
 
-      <div class="container">
-            <div class="justify_content_center">
+      <div class="container h-100">
+            <div class="row h-100 justify-content-center align-items-center">
                         <?php if(isset($message)){  
                         echo '<label class="text-danger">'.$message.'</label>';  
                         }?> 
-                <div class="form-group">
+                <div class="col-10 col-md-8 col-lg-6">
                     <form action="" method="POST">
-                            <label for="">Login:</label>
-                                <input type="text"  class="from-control" name="login" required="required" >
-                                <br>
-
-                            <label for="">Password:</label>
-                                <input type="password" class="from-control" name="password" required="required">
-                                <br>
+                        <div class="form-group">
+                            <label for="username">Login:</label>
+                            <input type="text"  class="form-control username" name="login" required="required" >
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password:</label>
+                            <input type="password" class="form-control password" name="password" required="required">
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Confirm Password: </label>
+                            <input type="password" class="form-control password" name="passwordconfirm"  required="required">
+                        </div>
                             <button class="btn btn-primary" name="submit" type="submit">Submit</button>
                     </form>
                 </div>
