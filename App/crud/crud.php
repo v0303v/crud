@@ -1,16 +1,16 @@
 <?php
 session_start(); 
-require_once './config.php';
+require_once '../config.php';
 
-// if($insertData)
+// if()
 //     {
 //         $_SESSION['message'] = "Record has been saved!";
-//         header('location: crud.php');
+//         header('location: ./crud.php');
 //     }
 //     else
 //     {
 //         $_SESSION['message'] = "Error happened!";
-//         header('location: crud.php');
+//         header('location: ./crud.php');
 //     }
 
 ?>
@@ -30,7 +30,7 @@ require_once './config.php';
 
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="<?php echo '/index.php';?>">HOME</a>
+        <a class="navbar-brand" href="<?php echo '../../index.php';?>">HOME</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -74,11 +74,11 @@ require_once './config.php';
                         <td><?php echo $row['fname']; ?></td>
                         <td><?php echo $row['lname']; ?></td>
                         <td><?php echo $row['file_name']; ?></td>
-                        <td><img src="../uploads/<?php echo $row['file_path']; ?>" height="20px" width="20px"/></td>
+                        <td><img src="../uploads/<?php echo $row['file_path']; ?>" height="80px" width="80px"/></td>
                         <td><?php echo $row['created_at']; ?></td>
                         <td>
-                            <a href="./crud.php?id=<?php echo $row['id'];?>" class="btn btn-info">Edit</a>
-                            <a href="./crud.php?id=<?php echo $row['id'];?>" class="btn btn-danger">Delete</a>
+                            <a href="./crud/crud.php?id=<?php echo $row['id'];?>" class="btn btn-info">Edit</a>
+                            <a href="./crud/crud.php?id=<?php echo $row['id'];?>" class="btn btn-danger">Delete</a>
                         </td>
                     </tr>    
                     <?php
@@ -112,7 +112,7 @@ require_once './config.php';
                         <?php
                         }else{
                         ?>
-                            <button type="submit" class="btn btn-primary" name="save">SAVE</button>
+                            <button type="submit" class="btn btn-primary" name="save" value="Upload">SAVE</button>
                         <?php
                         }
                         ?>

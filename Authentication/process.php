@@ -1,5 +1,5 @@
 <?php
-// include './DbConnection.php';
+//DbConnection to local database 
 class DbConnection {
     public $host = 'localhost';
     public $root = 'root';
@@ -18,7 +18,8 @@ class DbConnection {
         }
     }
 }
-class insertUser extends DbConnection {
+
+class createUser extends DbConnection {
     public $login;
     public $password;
     
@@ -53,17 +54,16 @@ class checkUser extends DbConnection {
     {
         $this->login = $login;
         $this->password = $password;
+
         parent::__construct();
     }
 
     public function userCheck() {
         try{
-
             if(empty($_POST['login']) || empty($_POST['password']))  { 
 
                 $message = 'All fields are required';
                 return $message; 
-            // var_dump($_POST);die;
             } else{  
                 $checker = "SELECT * FROM `users` WHERE login=:login AND password=:password";
             
@@ -71,20 +71,13 @@ class checkUser extends DbConnection {
                 $sql->bindParam(':login', $this->login, PDO::PARAM_STR);
                 $sql->bindParam(':password', $this->password, PDO::PARAM_STR);
 
-                      
-
                 $sql->execute(); 
                 
-                // var_dump($sql); die;
                 $row=$sql->rowCount(); 
-                // $fetch=$sql->fetch(PDO::FETCH_ASSOC);
-        
-                // var_dump($row); die;
-                // var_dump($fetch); die;
+
                 if($row > 0) {   
                     $_SESSION['login'] = $_POST['login'];
-                    header('location:../CRUD/crud.php'); 
-                    // var_dump($_SESSION); die;
+                    header('location:../App/crud/crud.php'); 
                 }  
                 else {  
                     $message = 'Wrong inputs';  
@@ -99,7 +92,30 @@ class checkUser extends DbConnection {
     }
 }
 
+$login = $_POST['login'];
+$password = $_POST['password']; 
+$passwordconfirm = $_POST['passwordconfirm'];
+//TODO password incryption
+// AND confirmation password!
 
+if ($_POST['password']!== $_POST['passwordconfirm']){
+    echo "Your passwords did not match";
+} else {
+    if($_SERVER['REQUEST_METHOD']=='POST'){
+        $register = new createUser($login, $password);
+        $register->inseption();
 
+        echo header('./register.php');
+    }
+}
 
-    
+//login part
+$login = $_POST['login'];
+$password = $_POST['password']; 
+
+$logIn = new checkUser($login, $password, $message);
+$logIn-> userCheck();
+
+if (isset($_SESSION['login'])){
+    header('location:../App/crud/crud.php');
+}

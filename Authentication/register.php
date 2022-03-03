@@ -1,28 +1,7 @@
 <?php
 session_start(); 
 require_once './process.php';
-
-$login = $_POST['login'];
-$password = $_POST['password']; 
-$passwordconfirm = $_POST['passwordconfirm'];
-//TODO password incryption
-// AND confirmation password!
-
-if ($_POST['password']!== $_POST['passwordconfirm']){
-    echo "Your passwords did not match";
-} else {
-    if($_SERVER['REQUEST_METHOD']=='POST'){
-        $register = new insertUser($login, $password);
-        $register->inseption();
-
-        echo header('register.php');
-    }
-}
-
-
-
 ?>
-
 
 <!doctype html>
 <html lang="en">
@@ -51,8 +30,6 @@ if ($_POST['password']!== $_POST['passwordconfirm']){
                 </li>
         </div>
     </nav>
-
-
       <div class="container h-100">
             <div class="row h-100 justify-content-center align-items-center">
                         <?php if(isset($message)){  

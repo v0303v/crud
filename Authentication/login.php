@@ -1,19 +1,5 @@
 <?php
-session_start(); 
-require './process.php';
-
-$login = $_POST['login'];
-$password = $_POST['password']; 
-
-$logIn = new checkUser($login, $password, $message);
-$logIn-> userCheck();
-// var_dump($logIn); die;
-
-if (isset($_SESSION['login'])){
-    header('location:../CRUD/crud.php');
-}
-// var_dump($_SESSION); die;
-
+require_once './process.php';
 ?>
 
 <!doctype html>
