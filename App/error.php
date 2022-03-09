@@ -1,6 +1,6 @@
 <?php
-require './user.php';
-
+namespace application\Crud;
+use Exception;
 class ErrorHandle extends Exception
 {
    

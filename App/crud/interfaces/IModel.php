@@ -1,4 +1,5 @@
 <?php 
+namespace app\crud\interfaces;
 interface IModel{
     public function create();
     public function read();

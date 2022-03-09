@@ -1,8 +1,8 @@
 <?php
 use phpDocumentor\Reflection\PseudoTypes\True_;
-include './AModel.php';
-include '../database/Db.php';
-
+namespace app\crud;
+use app\crud\AModel;
+use PDO;
 class User extends AModel{
     public $firstname;
     public $lastname;
@@ -33,9 +33,8 @@ class User extends AModel{
         $sql->bindParam(':filename', $this->filename, PDO::PARAM_STR);
         $sql->bindParam(':filepath', $this->filepath, PDO::PARAM_STR);
         $sql->bindParam(':timestamp', $this->timestamp->format('Y-m-d H:i:s'), PDO::PARAM_STR);
-        
-        $sql->execute();
 
+        $sql->execute();
     }
 
     public function read(){
@@ -45,11 +44,10 @@ class User extends AModel{
         $sql->execute();
 
         return $sql->fetchAll(PDO::FETCH_ASSOC);
-
     }
 
     public function update(){
-        $get = "UPDATE `data` SET firstname=:firstname, lastname=:lastname WHERE id=:id ";
+        $get = "UPDATE `data` SET firstname=:firstname, lastname=:lastname WHERE id=? ";
         $update = $this->dbConn->prepare($get);
     
         $update->bindParam(':firstname', $this->firstname, PDO::PARAM_STR);

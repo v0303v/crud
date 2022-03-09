@@ -1,5 +1,9 @@
 <?php
-include '../interfaces/IConnection.php';
+namespace app\database\connections;
+use app\database\interfaces\IConnection;
+use PDO;
+use PDOException;
+
 class MysqlConnection implements IConnection{  
     public $host = 'localhost';
     public $root = 'root';

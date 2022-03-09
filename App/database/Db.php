@@ -1,11 +1,13 @@
 <?php
-include './connections/PostgresConnection.php';
-include './connections/MysqlConnection.php';
+namespace app\database;
+use app\database\connections\MysqlConnection;
+use app\database\connections\PosgresConnection;
+
 class Db {
     public function getConnection($connectionName){
-        if($connectionName == "mysql"){
+        if ($connectionName == "mysql"){
             return (new MysqlConnection())->connect();
-        }elseif($connectionName == "posgres"){
+        } elseif ($connectionName == "posgres"){
             return new PosgresConnection();
         } else {
             return null;

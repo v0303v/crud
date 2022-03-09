@@ -1,17 +1,62 @@
 <?php
 session_start(); 
 require_once '../config.php';
+require_once '../../autoload/autoload.php';
+
+use app\crud\User;
 
 // if()
 //     {
 //         $_SESSION['message'] = "Record has been saved!";
-//         header('location: ./crud.php');
+//         header('location: crud.php');
 //     }
 //     else
 //     {
 //         $_SESSION['message'] = "Error happened!";
-//         header('location: ./crud.php');
+//         header('location: crud.php');
 //     }
+
+date_default_timezone_set('Asia/Tashkent');
+$allowed_extensions =[ "jpeg","jpg", "png", "gif" ];
+$filename = $_FILES['filename'];
+$folder = "../uploads/";
+$filename = $_FILES['filename']['name'];    
+$filetmp = $_FILES['filename']['tmp_name'];
+$location = $folder.$filename;
+$filepath = $folder.basename($filename);
+//new create user class 
+if($_SERVER['REQUEST_METHOD'] == 'POST') {
+   
+    $firstname = $_POST['firstname'];
+    $lastname = $_POST['lastname']; 
+    $timestamp = new DateTime('now');
+    $extensions = strtolower(strrchr($filename,"."));
+    
+    if (move_uploaded_file($filetmp, $location)) {      
+        $insertData = new User($firstname, $lastname, $filename, $extensions, $filepath, $timestamp);
+        $insertData->create();
+    } 
+    else{
+        $insertData = new User($firstname, $lastname, $filename, $extensions, $filepath, $timestamp);
+        $insertData->create();
+    }
+    header('location: crud.php');
+    exit;  
+}
+
+//read user table
+$display = new User($firstname, $lastname, $filename, $extensions, $filepath, $timestamp);
+$sql = $display->read();
+
+//Delete from the table 
+$deletion = new User($firstname, $lastname, $filename, $extensions, $filepath, $timestamp);
+$deletion->delete();
+
+//update
+// $update = new readUser();
+// $update->displayOne();
+// $update = new updateUser($firstname, $lastname);
+// $update->editRecord();
 
 ?>
 
@@ -45,12 +90,14 @@ require_once '../config.php';
         </div>
     </nav>
 
-        <div class="alert alert-<?php $_SESSION['msg_type'];?>">
+        <!-- <div class="alert alert-<?php 
+        // $_SESSION['msg_type'];
+        ?>">
             <?php
-            echo $_SESSION['message'];
-            unset($_SESSION['message']);
+            // echo $_SESSION['message'];
+            // unset($_SESSION['message']);
             ?>
-        </div>
+        </div> -->
     
     <div class="container">
         <div class="row justify-content-center">
@@ -74,11 +121,11 @@ require_once '../config.php';
                         <td><?php echo $row['fname']; ?></td>
                         <td><?php echo $row['lname']; ?></td>
                         <td><?php echo $row['file_name']; ?></td>
-                        <td><img src="../uploads/<?php echo $row['file_path']; ?>" height="80px" width="80px"/></td>
+                        <td><img src="<?php echo $row['file_path'];?>" height="80px" width="80px"/></td>
                         <td><?php echo $row['created_at']; ?></td>
                         <td>
-                            <a href="./crud/crud.php?id=<?php echo $row['id'];?>" class="btn btn-info">Edit</a>
-                            <a href="./crud/crud.php?id=<?php echo $row['id'];?>" class="btn btn-danger">Delete</a>
+                            <a href="./crud.php?id=<?php echo $row['id'];?>" class="btn btn-info">Edit</a>
+                            <a href="./crud.php?id=<?php echo $row['id'];?>" class="btn btn-danger">Delete</a>
                         </td>
                     </tr>    
                     <?php
@@ -89,7 +136,7 @@ require_once '../config.php';
         </div>
 
         <div class="row justify-content-center">
-            <form action="" method="POST" enctype="multipart/form-data">
+            <form action="?" method="POST" enctype="multipart/form-data">
                 <div class="form-group">
                         <input type="hidden" name="id" value="">
                     <div class="form-group">

@@ -1,5 +1,8 @@
 <?php
-include './interfaces/IModel.php';
+namespace app\crud;
+use app\crud\interfaces\IModel;
+use app\database\Db;
+
 abstract class AModel implements IModel{
     public function __construct(){
         $this->dbConn = (new Db())->getConnection("mysql");

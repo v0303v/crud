@@ -1,7 +1,11 @@
 <?php
-
+define("ROOT_DIR", __DIR__);
 session_start(); 
+include './autoload/autoload.php';
+//register();
+
 ?>
+
 <!doctype html>
 <html lang="en">
 
@@ -49,7 +53,7 @@ session_start();
     <div class="container">
         <div class="col text-center">
             <div class="d-grid gap-2 d-md-block">
-                <a class="btn btn-primary btn-lg " tabindex="-1" role="button" href="<?php echo 'Authentication/login.php';?> "aria-disabled="true">Login</a>
+                <a class="btn btn-primary btn-lg " tabindex="-1" role="button" href="<?php echo 'Authentication/login.php';?> "aria-disabled="true">Log in</a>
                 <a class="btn btn-primary btn-lg " tabindex="-1" role="button" href="<?php echo 'Authentication/register.php';?> "aria-disabled="true">Sign up</a>
             </div>
         </div>
