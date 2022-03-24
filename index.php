@@ -1,11 +1,7 @@
 <?php
-define("ROOT_DIR", __DIR__);
+
 session_start(); 
-include './autoload/autoload.php';
-//register();
-
 ?>
-
 <!doctype html>
 <html lang="en">
 
@@ -30,9 +26,9 @@ include './autoload/autoload.php';
                 <li class="nav-item active">
                     <a class="nav-link" href="<?php echo 'Authentication/login.php'; ?>">CRUD</a>
                 </li>
-                <!-- <li class="nav-item">
-                    <a class="nav-link" href="<?php echo 'index.php'; ?>">Logout</a>
-                </li> -->
+                <li class="nav-item">
+                    <a class="nav-link" href="<?php echo './filehandling/test.php'; ?>">File Test</a>
+                </li>
         </div>
     </nav>
 

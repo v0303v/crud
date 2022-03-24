@@ -82,10 +82,10 @@ $deletion->delete();
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" href="<?php echo '../Authentication/login.php';?>">CRUD</a>
+                    <a class="nav-link" href="<?php echo 'app/authentication/login.php';?>">CRUD</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="<?php echo '../Authentication/logout.php';?>">Logout</a>
+                    <a class="nav-link" href="<?php echo 'app/authentication/logout.php';?>">Logout</a>
                 </li>
         </div>
     </nav>

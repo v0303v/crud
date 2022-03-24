@@ -1,6 +1,8 @@
 <?php
 session_start();
 
-if (session_destroy()) {
-    header('location:/index.php');
-} 
+if (session_destroy()){
+    header('location: ../index.php');
+} else {
+    throw new Exception();
+}
